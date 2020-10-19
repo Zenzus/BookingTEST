@@ -1,26 +1,23 @@
 package dto;
 
 public class Employee {
-    private final int employeeid;
-    private final String eFirstname, eLastname;
+    private final int id;
+    private final String firstname, lastname;
 
-
-
-
-    public Employee(int employeeid, String eFirstname, String eLastname) {
-        this.employeeid = employeeid;
-        this.eFirstname = eFirstname;
-        this.eLastname = eLastname;
+    public Employee(int id, String firstname, String lastname) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
-    public int getEmployeeid() {
-        return employeeid;
+    public int getId() {
+        return id;
     }
-    public String geteFirstname() {
-        return eFirstname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String geteLastname() {
-        return eLastname;
+    public String getLastname() {
+        return lastname;
     }
 }

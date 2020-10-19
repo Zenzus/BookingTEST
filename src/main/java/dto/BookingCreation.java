@@ -1,40 +1,23 @@
 package dto;
 
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
 
-public class Booking {
-    private final int id;
+public class BookingCreation {
+
     private final String date;
     private final String start;
     private final String end;
     private final int customerId, employeeId;
 
 
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "id=" + id +
-                ", date='" + date + '\'' +
-                ", start='" + start + '\'' +
-                ", end='" + end + '\'' +
-                ", customerId=" + customerId +
-                ", employeeId=" + employeeId +
-                '}';
-    }
-
-    public Booking(int id, int customerId, int employeeId, String date, String start, String end ) {
-        this.id = id;
+    public BookingCreation(int customerId, int employeeId, String date, String start, String end) {
         this.customerId = customerId;
         this.employeeId = employeeId;
         this.date = date;
         this.start = start;
         this.end = end;
 
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getDate() {
@@ -57,4 +40,3 @@ public class Booking {
         return employeeId;
     }
 }
-

@@ -1,12 +1,12 @@
 package main;
 
 import com.github.javafaker.Faker;
+import datalayer.customer.BookingStorageImpl;
 import datalayer.customer.CustomerStorage;
 import datalayer.customer.EmployeeStorageImpl;
-import dto.Customer;
+import dto.*;
+import dto.Booking;
 import datalayer.customer.CustomerStorageImpl;
-import dto.CustomerCreation;
-import dto.EmployeeCreation;
 
 import java.sql.SQLException;
 
@@ -18,7 +18,9 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         CustomerStorageImpl storage = new CustomerStorageImpl(conStr, user, pass);
-        EmployeeStorageImpl eStorage = new EmployeeStorageImpl(conStr,user,pass);
+        EmployeeStorageImpl eStorage = new EmployeeStorageImpl(conStr, user, pass);
+        BookingStorageImpl bStorage = new BookingStorageImpl(conStr, user, pass);
+
 
         /* Makes 100 customers
         Faker faker = new Faker();
@@ -32,17 +34,34 @@ public class Main {
             EmployeeCreation c = new EmployeeCreation(faker.name().firstName(), faker.name().lastName());
             eStorage.createEmployee(c);
         }
+
+        BookingCreation t = new BookingCreation(3,3, "2020-10-10","20:15","21:15");
+        bStorage.createBooking(t);
         */
 
-        System.out.println("Got customers: ");
 
-        for(Customer c : storage.getCustomers()) {
+        System.out.println("Got customers: ");
+        for (Customer c : storage.getCustomers()) {
             System.out.println(toString(c));
         }
         System.out.println("The end.");
+
+        System.out.println("Got booking from customer: ");
+        for (Booking b : bStorage.getBookingsForCustomer(3)) {
+            System.out.println(b);
+        }
+        System.out.println("The end.");
+
+        System.out.println("Get Employee from id: ");
+        for (Employee e: eStorage.getEmployeeWithId(2)) {
+            System.out.println((e.getId()));
+            System.out.println((e.getFirstname()));
+            System.out.println((e.getLastname()));
+
+
+        }
+        System.out.println("The end.");
     }
-
-
 
 
     public static String toString(Customer c) {

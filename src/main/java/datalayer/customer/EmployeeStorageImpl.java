@@ -1,5 +1,6 @@
 package datalayer.customer;
 
+import dto.Customer;
 import dto.Employee;
 import dto.EmployeeCreation;
 
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class EmployeeStorageImpl implements EmployeeStorage {
@@ -25,7 +27,25 @@ public class EmployeeStorageImpl implements EmployeeStorage {
 
     @Override
     public Collection<Employee> getEmployeeWithId(int employeeId) throws SQLException {
-        return null;
+        var sql = "select ID, firstname, lastname from Employees where id = ?";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, employeeId);
+            var results = new ArrayList<Employee>();
+
+            try (var resultSet = stmt.executeQuery()) {
+                if (resultSet.next()){
+                    var id = resultSet.getInt("id");
+                    var firstname = resultSet.getString("firstname");
+                    var lastname = resultSet.getString("lastname");
+                    Employee e= new Employee(id, firstname, lastname);
+                    results.add(e);
+
+
+                }
+                return results;
+            }
+        }
     }
 
 

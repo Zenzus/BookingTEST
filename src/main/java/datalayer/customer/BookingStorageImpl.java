@@ -1,12 +1,12 @@
 package datalayer.customer;
 
 import dto.Booking;
+import dto.BookingCreation;
+import dto.Customer;
 import dto.EmployeeCreation;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,14 +28,17 @@ public class BookingStorageImpl implements BookingStorage{
         return  1;
 
     }
-/*
-    @Override
-    public int createBooking(Booking booking) throws SQLException {
-            var sql = "insert into Employees(firstname, lastname) values (?, ?)";
+
+
+    public int createBooking(BookingCreation bookingToCreate) throws SQLException {
+            var sql = "insert into Bookings(customerId,employeeId,date,start,end) values (?,?,?,?,?)";
             try (var con = getConnection();
                  var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                stmt.setString(1, employeeToCreate.getEFirstname());
-                stmt.setString(2, employeeToCreate.getELastname());
+                stmt.setInt(1, bookingToCreate.getCustomerId());
+                stmt.setInt(2, bookingToCreate.getEmployeeId());
+                stmt.setString(3, bookingToCreate.getDate());
+                stmt.setString(4, bookingToCreate.getStart());
+                stmt.setString(5, bookingToCreate.getEnd());
 
                 stmt.executeUpdate();
 
@@ -47,12 +50,33 @@ public class BookingStorageImpl implements BookingStorage{
                 }
             }
         }
-    }*/
+
 
     @Override
     public Collection<Booking> getBookingsForCustomer(int customerId) throws SQLException {
-        return null;
+        var sql = "select ID, customerId, employeeId,date,start,end from Bookings where customerId= ?";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)){
+            stmt.setInt(1, customerId);
+            var results = new ArrayList<Booking>();
+
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+
+                int id = resultSet.getInt("ID");
+                int employeeId = resultSet.getInt("employeeId");
+                String date = resultSet.getString("date");
+                String start = resultSet.getString("start");
+                String end = resultSet.getString("end");
+
+                Booking c = new Booking(id, customerId, employeeId, date, start, end);
+                results.add(c);
+            }
+
+            return results;
+        }
+
     }
-
-
 }
