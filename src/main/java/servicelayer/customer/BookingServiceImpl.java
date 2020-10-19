@@ -1,16 +1,34 @@
 package servicelayer.customer;
 
+import datalayer.customer.BookingStorage;
+import datalayer.customer.CustomerStorage;
 import dto.Booking;
+import dto.CustomerCreation;
 
+import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Date;
+
 
 public class BookingServiceImpl implements BookingService{
+    private BookingStorage bookingStorage;
 
-    @Override
-    public int createBooking(int customerId, int employeeId, Date date, double start, double end) throws CustomerServiceException {
-        return 0;
+    public BookingServiceImpl(BookingStorage bookingStorage) {
+        this.bookingStorage = bookingStorage;
     }
+
+
+    public int createBooking(int customerId, int employeeId, String date, String start, String end) throws CustomerServiceException {
+        return 1;
+    }
+    /*
+    @Override
+    public int createBooking(int customerId, int employeeId, String date, String start, String end) throws CustomerServiceException {
+      try {
+            return createBooking(customerId,employeeId,date,start,end);
+        } catch (SQLException throwables) {
+            throw new CustomerServiceException(throwables.getMessage());
+        }
+    }*/
 
     @Override
     public Collection<Booking> getBookingsForCustomer(int customerId) throws CustomerServiceException {

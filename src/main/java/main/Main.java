@@ -57,10 +57,15 @@ public class Main {
             System.out.println((e.getId()));
             System.out.println((e.getFirstname()));
             System.out.println((e.getLastname()));
-
-
         }
         System.out.println("The end.");
+
+        System.out.println("Got booking from employee: ");
+        for (Booking e : bStorage.getBookingsForEmployee(3)) {
+            System.out.println(e);
+        }
+        System.out.println("The end.");
+
     }
 
 

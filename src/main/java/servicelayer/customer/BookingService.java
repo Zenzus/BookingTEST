@@ -12,7 +12,7 @@ import java.util.Date;
 
 public interface BookingService {
 
-     int createBooking(int customerId, int employeeId, Date date, double start, double end) throws CustomerServiceException;
+     int createBooking(int customerId, int employeeId, String date, String start, String end) throws CustomerServiceException;
      Collection<Booking> getBookingsForCustomer(int customerId)throws CustomerServiceException;
      Collection<Booking> getBookingsForEmployee(int employeeId)throws CustomerServiceException;
 }
